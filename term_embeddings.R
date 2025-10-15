@@ -111,7 +111,13 @@ plot_df <- data.frame(
   source = df_terms_filtered$source[match(labels_in_model, df_terms_filtered$label)]
 )
 
-plot_df_filtered <- plot_df %>%
+# check overlap door embeddings
+
+sum(duplicated(plot_df$label)) # 4287
+
+plot_df_unique <- plot_df[!duplicated(plot_df$label), ]
+
+plot_df_filtered <- plot_df_unique %>%
   filter(x < 15, y < 8)
 
 p <- ggplot(plot_df_filtered, aes(x = x, y = y, color = source)) +
@@ -161,4 +167,13 @@ overlap  <- df_terms[, .(unique_sources = uniqueN(source)), by = label]
 overlap[unique_sources ==2,] # antwoord: 5280 preflabels zijn volledig identiek
 
 5280/ (73347/2) # 14,4 % (grofweg)
+
+
+# check overlap door embeddings
+
+sum(duplicated(plot_df$label)) # 4287
+
+plot_df_unique <- plot_df[!duplicated(plot_df$label), ]
+
+
 
